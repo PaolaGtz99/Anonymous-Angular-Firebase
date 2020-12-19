@@ -1,0 +1,23 @@
+.preguntas{
+    margin: 50px;
+    margin-left: 80px;
+    margin-right: 80px;
+}
+
+mat-expansion-panel-header {
+    
+    text-shadow: 2px 2px 4px #000000;
+
+}
+mat-expansion-panel{
+   
+    color: black;
+}
+
+
+h1{
+    font-size: 55px;
+    color: black;
+    text-shadow: 1px 1px rgb(255, 255, 255);
+    border-radius: 15px;
+}

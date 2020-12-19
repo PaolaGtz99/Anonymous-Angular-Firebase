@@ -1,0 +1,32 @@
+mat-toolbar{
+    background-color: rgb(1, 12, 19);
+}
+.btnMenu{
+    margin-left: 10px;
+}
+.login{
+    border-bottom: .5px solid rgba(70, 62, 62, 0.678);
+}
+
+mat-sidenav-content{
+
+background-image: url('../../../assets/img/fondo2.jpg');
+}
+
+.input-group-text {
+    background: #c0392b !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.logIn{
+    text-align: center;
+}
+
+.modalLogIn{
+    width: 300px ;
+}
+.modalLogIn2{
+    width: 700px ;
+}

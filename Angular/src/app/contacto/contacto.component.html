@@ -1,0 +1,74 @@
+
+<div fxLayout="row" fxLayout.lt-sm="column"  fxLayoutAlign="space-around center">
+  <mat-card class="example-card">
+      <mat-card-header>
+       
+        <mat-card-title>C O N T A C T A N O S</mat-card-title>
+        
+      </mat-card-header>
+     
+      <mat-card-content>
+        
+          <form class="example-form" [formGroup]="form" (ngSubmit)="contactForm(form.value)" novalidate  >
+              <mat-form-field class="example-full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" value="{{value}}" class="form-control"  formControlName="name">
+              <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error *ngIf="form.get('name').hasError('required')">
+                Name is <strong>required</strong>
+              </mat-error>
+              </mat-form-field>
+            
+              <mat-form-field class="example-full-width">
+                <mat-label>¿Cual es tu Pregunta?</mat-label>
+                <textarea matInput class="form-control"  formControlName="message" ></textarea>
+                <mat-error *ngIf="form.get('message').hasError('required')">
+                  Message is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('message').hasError('minLength')">
+                  Message minLength is <strong>3</strong>
+                </mat-error>
+              </mat-form-field>
+      
+              <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Ex. pat@example.com" class="form-control"  formControlName="email">
+                <mat-error *ngIf="form.get('email').hasError('email')">
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="form.get('email').hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+      
+              
+              <mat-slide-toggle>Enviar Notificaciones</mat-slide-toggle>
+           
+              <br> <br>
+              <button mat-raised-button color="accent" type="submit">Enviar</button>
+            
+            </form>
+
+      </mat-card-content>
+     
+    </mat-card>
+
+    <mat-card class="example-card e2">
+      <mat-card-header>
+        <mat-card-title>Para mas informacion...</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <i class="fab fa-whatsapp fa-2x"></i>
+        </p>
+        <a matTooltip="(449) 198-45-82">ALEXIA FLORES FLORES</a> <br><br>
+        <a matTooltip="(449) 198-45-82">PAOLA GUTIERREZ SALAZAR</a> <br><br>
+        <a matTooltip="(449) 198-45-82">LUIS ENRIQUE WONG MARTINEZ</a> <br><br>
+        <a matTooltip="(449) 198-45-82">ALFONSO PADILLA ALONSO</a> <br><br>
+        <a matTooltip="(449) 911-33-10">OSCAR SALAS GUTIERREZ</a> <br><br>
+      </mat-card-content>
+      
+    </mat-card>
+</div>

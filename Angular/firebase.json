@@ -1,0 +1,26 @@
+{
+  "hosting": {
+    "public": "dist/proyecto2",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/peli",
+        "function": "app"
+      },
+      {
+        "source": "/formulario",
+        "function": "app"
+      }
+    ]
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ],
+    "source": "functions"
+  }
+}

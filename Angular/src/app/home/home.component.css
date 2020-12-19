@@ -1,0 +1,26 @@
+.home{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+mat-toolbar{
+    background-color: rgb(207, 214, 241);
+}
+
+  .letra{
+    font-size: 20px;
+  }
+ 
+mat-card{
+    max-width: 800px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}  
+
+.boton{
+  padding-top: 5px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+}
+
+

@@ -1,0 +1,15 @@
+.centrar{
+    text-align: center;
+}
+.margen{
+    margin-top: 20px;
+}
+
+.slider{
+    min-height: 200px;
+}
+
+.pad{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

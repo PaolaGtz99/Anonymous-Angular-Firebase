@@ -1,0 +1,59 @@
+
+<div class="container margen">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-8">
+        <div class="card shadow">
+            <div class="card-body">
+            <div class="row">
+                <div class="col-4 centrar">
+                    <img width="150px" class="img-thumbnail" src="../../assets/img/usuario.png" alt="Thumbnail image">
+                </div>
+                <div class="col">
+                    <p>Estudiante: <span id="nomUser"><h1>{{user?.nombre}}</h1></span></p>
+                    <div class="centrar shadow p-3 bg-light rounded prom"><b>Promedio</b><br><span id="prom">{{prom | number: '1.2-2'}}</span></div>
+                </div>
+                
+                <qrcode  qrc-element-type="text" [qrdata]="ngxQrcode2" ></qrcode >
+            </div>
+            </div>
+          </div>
+      </div>
+      <div class="col"></div>
+    </div>
+ </div>
+
+<div class="container margen">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-10" >
+        <table class="table table-hover centrar">
+            <thead class="thead-dark">
+              <tr>
+                <th>id</th>
+                <th>Materia</th>
+                <th>Calificacion</th>
+              </tr>
+            </thead>
+            <tbody id="tabla" class="centrar">
+              <tr *ngFor="let materia of materiasusuario"
+              class="{{materia.nota <= 5 ? 'table-danger':(materia.nota <= 7 ? 'table-warning':'table-success')}} ">
+                <td>
+                  {{materia.idMateria}}
+                </td>
+                <td>
+                  {{materias[materia.idMateria]}}
+                </td>
+                <td>
+                  {{materia.nota | number: '1.2-2'}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="col" >
+      </div>
+    </div>
+ </div>   
+
+ <br><br>

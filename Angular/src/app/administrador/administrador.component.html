@@ -1,0 +1,203 @@
+<div class="container margen">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-6">
+        <div class="card shadow">
+            <div class="card-body">
+            <div class="row">
+                <div class="col-4 centrar">
+                    <img width="150px" class="img-thumbnail" src="../../assets/img/usuario.png" alt="Thumbnail image">
+                </div>
+                <div class="col">
+                    
+                    <div class="centrar shadow p-3 bg-light rounded prom"><b>ADMINISTRADOR</b> <br> NOMBRE: {{(user|async).nombre}} </div>
+                </div>
+            </div>
+            </div>
+          </div>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8">
+           <mat-tab-group mat-align-tabs="center" class="slider margen" (selectedTabChange)='encuentraAl=false'>
+               <!-- -------- M A E S T R O S ------------- -->
+               <mat-tab label="MAESTROS" >
+                <div class="container">
+                 <div class="row centrar margen">
+                     <div class="col"><h1><b> MAESTROS</b></h1></div>
+                     <div class="col">
+                        <mat-form-field class="example-form-field">
+                            <mat-label>Buscar Maestro</mat-label>
+                            <input matInput type="text" [(ngModel)]="buscarMaestro" (keyup.enter)="buscar('maestro',buscarMaestro)">
+                            <small class="errormsj">{{EncontroMa}}</small>
+                            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                     </div>
+                     <div class="col"><button mat-raised-button color="primary" (click)="mostrarNM()" >Nueva Materia</button></div>
+                 </div>  
+
+                 <!-- -------- M A E S T R O  encontrado ------------- -->
+                 <div class="row bg-white centrar" *ngIf="encuentraMa == true" >
+                    <div class="centrar"><h2>NOMBRE: <b> {{aux2.nombre}}</b></h2></div>
+                   <table class="table table-hover centrar">
+                       <thead class="thead-dark">
+                         <tr>
+                           <th>Id</th>
+                           <th>Materia</th>
+                         </tr>
+                       </thead>
+                       <tbody>
+                         <tr *ngFor='let materia of materiasMaestro'>
+                           <th scope="row">{{materia.uid}}</th>
+                           <td> {{materia.nombre}} </td>
+                         </tr>
+                       </tbody>
+                     </table>
+                </div>
+
+                  <!-- -------- nueva materia ------------- -->  
+                <div class="row bg-white" *ngIf="nuevoM == 'true'" >
+                     
+                        <div class="col pad centrar">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Nombre Materia</mat-label>
+                                <input matInput [(ngModel)]="NombreMateria">
+                              </mat-form-field>
+                        </div>
+                        <div class="col pad centrar">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Maestro</mat-label>
+                                <input [(ngModel)]="maestroSeleccionado" matInput disabled>
+                              </mat-form-field>
+                        </div>
+                        <div class="col-2 pad centrar"><button type="button" class="btn btn-success" (click)="addMateria()">Añadir</button></div>
+            
+                    </div>
+                    <!-- -------- L I S T A  M A E S T R O S ------------- -->
+                 <div class="row">
+                       
+                <table class="table table-hover centrar">
+                    <thead class="thead-dark">
+                        <tr>
+                         <th>id</th>
+                         <th>Nombre</th>
+                         <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let obj of maestroTable">
+                            <th scope="row">{{obj.uid}}</th>
+                            <td>{{obj.nombre}}</td>
+                            <td><button *ngIf="nuevoM == 'false'" class="btn btn-danger" (click)="fnEliminarUsuario(obj)"><i class="fas fa-times"></i></button>
+                                <button *ngIf="nuevoM == 'true'" class="btn btn-outline-success" (click)="nuevaMateriaMaestro(obj.uid)">Asingnar</button></td>
+                           </tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+            </mat-tab>
+
+               <mat-tab label="ALUMNOS">
+                   <!-- -------- A L U M N O S ------------- -->
+                <div class="container">
+                 <div class="row centrar margen">
+                     <div class="col"><h1><b> ALUMNOS</b></h1>
+                    </div>
+                     <div class="col">
+                        <mat-form-field class="example-form-field">
+                            <mat-label>Buscar Alumno</mat-label>
+                            <input matInput type="text" [(ngModel)]="buscarAlumno" (keyup.enter)="buscar('estudiante',buscarAlumno)">
+                            <small class="errormsj">{{EncontroAl}}</small>
+                            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        
+                     </div>
+                  </div>  
+
+                 <!-- ALUMNO ENCONTRADO-------------- -->
+
+                 <div class="row bg-white centrar" *ngIf="encuentraAl == true" >
+                     <div class="centrar"><h2>NOMBRE: <b> {{aux.nombre}}</b></h2></div>
+                    <table class="table table-hover centrar">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th>Id</th>
+                            <th>Materia</th>
+                            <th>Calif</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor='let materia of materiasusuario' class="
+                            {{
+                                materia.nota <= 5 ? 'table-danger':(materia.nota <= 7 ? 'table-warning':'table-success')
+                            }}">
+                            <th scope="row">{{materia.idMateria}}</th>
+                            <td> {{materias[materia.idMateria]}} </td>
+                            <td>{{materia.nota | number: '1.2-2'}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                 </div>
+                 <!-- MOSTRAR ALUMNOS -------------- -->
+                 
+                 <div class="row">     
+                <table class="table table-hover centrar">
+                    <thead class="thead-dark">
+                        <tr>
+                         <th>id</th>
+                         <th>Nombre</th>
+                         <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let obj of alumnoTable">
+                         <th scope="row">{{obj.uid}}</th>
+                         <td>{{obj.nombre}}</td>
+                         <td><button class="btn btn-danger" (click)="fnEliminarUsuario(obj)"><i class="fas fa-times"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+               </mat-tab>
+               <!-- -------- G R A F I C A S ------------- -->
+               <mat-tab  label="GRAFICAS" class="centrar" >
+                 <div class="row " style="margin-top: 17px;">
+                   <div class="col-3 centrar">
+                    <button class="btn btn-danger" style="margin-top: 10px;" (click)="grafica()">Grafica Total de Personas</button>
+                    <button class="btn btn-danger" style="margin-top: 10px;" (click)="grafica2()">Grafica Alumnos</button>
+                   </div>
+                   <div class="col">
+                    <div style="display: block" *ngIf="mostrarGraf==true">
+                      <canvas baseChart
+                          [data]="doughnutChartData"
+                          [labels]="doughnutChartLabels"
+                          [chartType]="doughnutChartType">
+                      </canvas>
+                    </div>
+                    <div style="display: block" *ngIf="mostrarGraf2==true">
+                      <canvas baseChart
+                          [data]="doughnutChartData2"
+                          [labels]="doughnutChartLabels2"
+                          [chartType]="doughnutChartType">
+                      </canvas>
+                    </div>
+                   </div>
+                 </div>
+                   
+              </mat-tab>
+            </mat-tab-group>
+        </div>
+    
+        <div class="col"></div>
+
+    </div>
+   
+ </div>
+ <br><br>

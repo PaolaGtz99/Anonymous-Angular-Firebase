@@ -1,0 +1,18 @@
+.example-card {
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+  .example-card2 {
+    text-align: center;
+    max-width: 200px;
+    margin-bottom: 20px;
+  } 
+  
+  .example-header-image {
+    background-image: url('../../assets/img/logo.png');
+    background-size: cover;
+  }
+
+  .contacto{
+      margin: 50px;
+  }

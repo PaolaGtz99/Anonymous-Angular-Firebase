@@ -1,0 +1,171 @@
+<div style="height: 80vh;">
+  <button class="btn btn-secondary btn-sm" (click)="mostLec()"><i
+      class="fas fa-assistive-listening-systems"></i></button>
+
+  <div class="btn-group btn-group-sm" role="group" *ngIf="mostrarLectura == true">
+    <button class="btn btn-dark btn-sm" (click)="start(toRead.textContent)"> <i class="fas fa-play"></i> </button>
+    <button class="btn btn-dark btn-sm" (click)="pause()"> <i class="fas fa-pause"></i> </button>
+    <button class="btn btn-dark btn-sm" (click)="resume()"> RESUME </button>
+    <button class="btn btn-dark btn-sm" (click)="changeVoice()"> Voices </button>
+  </div>
+  <br>
+  <select #langSelect *ngIf="speechData" (change)="setLanguage(langSelect.value)">
+    <option [value]="i" *ngFor="let voice of speechData.voices;let i = index;">
+      {{voice.name}} - {{voice.lang}}
+    </option>
+  </select>
+
+  <div #toRead>
+
+
+    <div fxLayoutAlign="end" class="login">
+      <span style style="color: white; margin-right: 10px; font-size: 20px;"><b>{{(currentUser|async)?.nombre}}</b> &nbsp; &nbsp;</span>
+      <button fxLayoutAlign="end" mat-flat-button color="warn" [matMenuTriggerFor]="beforeMenu"><i
+          class="fas fa-user"></i> <b>LOGIN</b> </button>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" fxShow="true" fxHide.gt-xs>
+      <img src="../assets/img/logo.png" width="100px" alt="">
+    </div>
+
+    <div>
+    <button mat-raised-button class="btn-block" color="warn" (click)="sidenav.toggle()" fxShow="true" fxHide.gt-xs>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+    <mat-toolbar fxShow="true" fxHide.lt-sm>
+      <mat-toolbar-row>
+        <img src="../assets/img/logo.png" width="60px" alt="" class="logo">
+        <button class="btnMenu" mat-raised-button color="warn" [routerLink]="['/home']"><i
+            class="fas fa-home fa-2x"></i><br> <b>Home</b></button>
+        <button class="btnMenu" mat-raised-button color="warn" [matMenuTriggerFor]="belowMenu"><i
+            class="fas fa-university fa-2x"></i><br> <b>Acerca de</b></button>
+        <button class="btnMenu" mat-raised-button color="warn" [routerLink]="['/contacto']"><i
+            class="fas fa-phone fa-2x"></i><br> <b>Contacto</b> </button>
+      </mat-toolbar-row>
+
+    </mat-toolbar>
+
+    <!-- ----- Sublogin ------ -->
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item *ngIf="(currentUser|async).uid" (click)="Perfil()">Mi Perfil</button>
+      <button mat-menu-item *ngIf="(currentUser|async).uid" (click)="fnLogout()">Logout</button>
+      <button mat-menu-item *ngIf="!(currentUser|async).uid" data-toggle="modal" data-target="#exampleModal"
+        (click)="btn='LOGIN'">Login</button>
+      <button mat-menu-item *ngIf="!(currentUser|async).uid" data-toggle="modal" data-target="#exampleModal"
+        (click)="btn='REGISTRARSE'">Crear cuenta</button>
+    </mat-menu>
+    <!-- ----- SubAcerca de ------ -->
+    <mat-menu #belowMenu="matMenu" yPosition="below">
+      <button mat-menu-item [routerLink]="['/about']">¿Quienes somos?</button>
+      <button mat-menu-item [routerLink]="['/preguntas']">Preguntas Frecuentes</button>
+    </mat-menu>
+
+    <!-- Login y Crear cuenta -->
+
+    <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog logIn modalLogIn" role="document">
+        <div class="modal-content center-block">
+          <div class="modal-header logIn">
+            <h1 class="modal-title" id="exampleModalLabel"><b>{{btn}} </b> </h1>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form>
+              <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                    placeholder="Ex. pat@example.com" id="emailLogin">
+                  <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Please enter a valid email address
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Contraseña</mat-label>
+                  <input matInput id="passLogin" [type]="hide ? 'password' : 'text'">
+                  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <br><small class="errormsj"> {{contraMin}} </small>
+                </mat-form-field>
+                <br>
+                <div *ngIf="btn == 'LOGIN' else reg">
+                  <button mat-raised-button color="warn" (click)="iniciarSesion()">Login</button>
+                  <br>
+                  <div *ngIf="spinner == true" class="spinner-border text-danger" role="status">
+                    <br><br><span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+                <ng-template #reg>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Confirmar Contraseña</mat-label>
+                    <input matInput [type]="hide2 ? 'password' : 'text'" id="passLoginConfirm">
+                    <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide2">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <br><small class="errormsj"> {{contraDif}} </small>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput id="nameLogin" type="text">
+                  </mat-form-field>
+
+                  <button class="btn btn-info btn-sm" (click)="cambiar()" type="button">Tipo de Cuenta</button>
+                  <h3> {{tipoDeCuenta}} </h3>
+
+                  <button mat-raised-button color="warn" (click)="registro()">Registrarse</button>
+
+                  <div *ngIf="spinner == true" class="spinner-border text-danger" role="status">
+                    <br><br>
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <small class="errormsj"><br> {{campos}}<br> </small>
+                </ng-template>
+
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    -->
+
+    <!-- ----- Responsive ------ -->
+
+    <mat-sidenav-container fxFlexFill>
+      <mat-sidenav #sidenav>
+        <mat-nav-list>
+
+          <a [routerLink]="['/home']" mat-list-item>
+            <i class="fas fa-home"></i> &nbsp; &nbsp; <b> H o m e</b></a>
+          <a [routerLink]="['/about']" mat-list-item>
+            <i class="fas fa-university"></i>&nbsp; &nbsp; <b> ¿ Q u i e n e s S o m o s? </b></a>
+          <a [routerLink]="['/preguntas']" mat-list-item>
+            <i class="fas fa-question"></i>&nbsp; &nbsp; <b> P r e g u n t a s F r e c u e n t e s </b></a>
+          <a [routerLink]="['/contacto']" mat-list-item>
+            <i class="fas fa-phone"></i>&nbsp; &nbsp; <b> C o n t a c t o </b></a>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content fxFlexFill>
+        <router-outlet></router-outlet>
+        <app-footer></app-footer>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+
+  </div>
+</div>
